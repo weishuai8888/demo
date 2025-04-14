@@ -1,0 +1,50 @@
+# 117.50.98.242 - 101.43.166.228
+
+##### mysql
+    root - root123456
+    192.168.31.95 - root123456
+    221.222.182.119 - root123456
+    101.43.166.228 - root123456#
+1.进入mysql
+mysql的文件的位置可能不一样，网上有的在/usr/local/mysql/bin/mysql这个目录下，有的的却是在/usr/bin/mysql下。
+所以先通过find命令查找一下mysql文件的具体位置，然后再执行下面的操作。查找命令
+	//查找mysql文件
+	# find / -name mysql
+查找到位置之后就可以进入mysql了
+	//进入mysql
+	# /usr/bin/mysql -u username -p
+这里的username是你自己数据库中设置的用户名，要根据自己的实际情况来，下面输入数据库的密码。
+
+2.查看用户表
+首先要先指定使用mysql数据库，然后再进行查询操作。
+    //进入mysql数据库
+    mysql> use mysql
+    myql> select Host,User from sysUser;
+下面的列表就是查询user表后可以访问数据库的指定的Ip地址：
++-----------------+---------------+
+| Host            | User          |
++-----------------+---------------+
+| %               | mysqld        |
+| 192.168.31.95   | root          |
+| 221.222.182.119 | root          |
+| localhost       | mysql.session |
+| localhost       | mysql.sys     |
+| localhost       | root          |
++-----------------+---------------+
+
+3.更新/授权用户表
+    //更新用户表
+    mysql> UPDATE `sysUser` SET `Host` = '113.128.*.*' where `Host` = '113.128.*.*';
+    //授权用户表
+    mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'113.128.*.*' IDENTIFIED BY 'password' WITH GRANT OPTION;
+113.128.*.* 是允许远程访问的IP的值,root是账户名，后面的password是密码。
+ - 即，允许来自1113.128.*.* 的连接并使用root账户和password这个密码进行访问。
+ ALL PRIVILEGES ON 后面的*.*表示所有数据库，即完全访问权限，可以指定为特定数据库。
+ 如果允许所有ip访问，则ip可以用%代替。
+ 执行更新/授权命令后再次查询，虽然IP地址已经变了，但其实是不生效的，Navicat依然连不上mysql，还有要一个强制刷新的操作，这样才能连上。
+    //强制刷新
+    mysql> flush privileges;
+
+这样就可以连接上了！
+
+######## 公众号

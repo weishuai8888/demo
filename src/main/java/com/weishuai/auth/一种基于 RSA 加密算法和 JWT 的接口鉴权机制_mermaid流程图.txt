@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant Client as 第三方客户端
+    participant API as API网关
+    participant Auth as 鉴权服务
+    participant Redis as Redis缓存
+    
+    Client->>API: 1. 发送加密的API请求
+    Note over Client,API: 请求头包含加密token和timeout
+    
+    API->>Auth: 2. 进入鉴权切面
+    
+    Auth->>Auth: 3. RSA解密token
+    Auth->>Auth: 4. 验证JWT有效性
+    
+    Auth->>Redis: 5. 检查token是否使用
+    Redis-->>Auth: 6. 返回检查结果
+    
+    alt token未使用
+        Auth->>Redis: 7.1 存储token并设置过期时间
+        Auth->>API: 7.2 鉴权通过
+        API->>Client: 7.3 处理业务请求
+    else token已使用
+        Auth->>API: 8.1 抛出重放异常
+        API->>Client: 8.2 返回错误响应
+    end
+	
