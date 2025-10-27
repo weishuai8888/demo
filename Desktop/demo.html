@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>济南社会工作协会</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
+            color: white;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            height: 100px;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .header-content {
+            position: relative;
+            padding: 0 15px;
+            display: none;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+            color: #e53935;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .header-text p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Function Grid */
+        .function-grid {
+            background: white;
+            padding: 20px 15px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .function-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .function-item:active {
+            transform: scale(0.95);
+        }
+
+        .function-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            overflow: hidden;
+            background: url('移动端需要的图片/图标背景.png') no-repeat center;
+            background-size: cover;
+            padding: 8px;
+        }
+
+        .function-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .function-item span {
+            display: block;
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* Search Bar */
+        .search-container {
+            padding: 0 15px 15px;
+            background: white;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px;
+            padding: 0 60px 0 15px;
+            font-size: 14px;
+            background: #f8f8f8;
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 28px;
+            border: none;
+            background: #1e88e5;
+            color: white;
+            border-radius: 14px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Notice Bar */
+        .notice-bar {
+            margin: 10px 15px;
+            display: flex;
+            align-items: stretch;
+            height: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .notice-header {
+            background: #e53935;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            border-radius: 8px !important;
+            box-sizing: border-box;
+        }
+
+        .notice-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            flex-shrink: 0;
+        }
+
+        .notice-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .notice-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .notice-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            padding: 0 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .notice-scroll {
+            animation: scroll-continuous 15s linear infinite;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notice-item {
+            font-size: 13px;
+            color: #666;
+            line-height: 22px;
+            height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @keyframes scroll-continuous {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+
+        /* Carousel */
+        .carousel-container {
+            margin: 0 15px 15px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 180px;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-slide:nth-child(1) {
+            background: linear-gradient(135deg, #e53935 0%, #ef5350 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .carousel-slide:nth-child(2) {
+            background: linear-gradient(135deg, #43a047 0%, #66bb6a 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .carousel-slide:nth-child(3) {
+            background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: white;
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        /* Section with Tabs */
+        .section {
+            margin: 0 15px 15px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .tabs-header {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: none;
+            margin-bottom: 0;
+            padding: 0 10px;
+        }
+
+        .tab-item {
+            padding: 10px 0 0;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 5px;
+        }
+
+        .tab-item-content {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tab-icon {
+            font-size: 16px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tab-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .tab-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .tab-item.active .tab-title {
+            color: #e53935;
+            font-weight: 600;
+        }
+
+        .tab-divider {
+            height: 2px;
+            background: linear-gradient(to right, #e53935 50%, #1e88e5 50%);
+            margin: 8px auto 0;
+            width: fit-content;
+            min-width: 100px;
+        }
+
+        .tab-item.active .tab-divider {
+            display: block;
+        }
+
+        .tab-item .tab-divider {
+            display: none;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .news-list {
+            list-style: none;
+        }
+
+        .news-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item::before {
+            content: '•';
+            color: #e53935;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .news-text {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            margin: 0 15px 15px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .section-header {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 0;
+            margin-left: 10px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+
+        .section-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e53935;
+        }
+
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, #e53935 50%, #1e88e5 50%);
+            margin: 8px 10px 12px;
+            width: fit-content;
+            min-width: 140px;
+        }
+
+        .gallery-carousel {
+            position: relative;
+            height: 90px;
+            overflow: hidden;
+            border-radius: 0;
+            margin-top: 12px;
+        }
+
+        .gallery-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .gallery-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            background: white;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: #fff;
+            border-radius: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-content {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            position: relative;
+            text-align: center;
+            color: #999;
+            padding: 8px 5px;
+            font-size: 12px;
+            background: white;
+            width: 100%;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        /* Services Section */
+        .services-section {
+            margin: 0 15px 15px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .service-item {
+            background: url('移动端需要的图片/便民服务背景.png') no-repeat center;
+            background-size: cover;
+            color: white;
+            padding: 8px 3px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .service-item:active {
+            transform: scale(0.95);
+        }
+
+        /* Links Section */
+        .links-section {
+            margin: 0 15px 15px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .links-list {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            margin-top: 12px;
+            padding: 0 10px;
+            justify-content: center;
+        }
+
+        .links-list a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
+            padding: 20px 15px;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .footer-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid white;
+            text-align: center;
+            display: inline-block;
+            width: auto;
+        }
+
+        .footer-title-wrapper {
+            text-align: center;
+        }
+
+        .qr-section {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            margin-top: 15px;
+        }
+
+        .qr-item {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .qr-label {
+            font-size: 11px;
+            color: white;
+            margin-bottom: 8px;
+            order: -1;
+        }
+
+        .qr-code {
+            width: 80px;
+            height: 80px;
+            background: #f0f0f0;
+            border: 1px solid #e0e0e0;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+            overflow: hidden;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .footer-info {
+            padding: 0 15px;
+            text-align: center;
+        }
+
+        .footer-contact-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid white;
+            text-align: center;
+            display: inline-block;
+            width: auto;
+        }
+
+        .footer-copyright {
+            font-size: 11px;
+            color: white;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .footer-contact-info {
+            margin-left: 55px;
+        }
+
+        .footer-address {
+            font-size: 11px;
+            color: white;
+            line-height: 1.8;
+            margin-top: 8px;
+            text-align: left;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 8px;
+            font-size: 10px;
+            color: white;
+            align-items: flex-start;
+        }
+
+        .footer-contact div {
+            white-space: nowrap;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .header-text h1 {
+                font-size: 20px;
+            }
+
+            .function-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .carousel-container {
+                height: 220px;
+            }
+
+            .gallery-carousel {
+                height: 250px;
+            }
+
+            .section, .gallery-section, .services-section {
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 15px;
+            }
+
+            .notice-bar {
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            body {
+                max-width: 1024px;
+                margin: 0 auto;
+                background: white;
+            }
+
+            .carousel-container {
+                height: 280px;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 15px;
+            }
+
+            .gallery-carousel {
+                height: 300px;
+            }
+        }
+
+        /* Touch interaction */
+        .carousel-container, .gallery-carousel {
+            touch-action: pan-y;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+    <img src="移动端需要的图片/移动端头部图片.png" alt="济南社会工作协会" class="header-image">
+</div>
+
+<!-- Function Grid -->
+<div class="function-grid">
+    <div class="function-item">
+        <div class="function-icon">
+            <img src="./移动端需要的图片/行业要闻.png" alt="行业要闻">
+        </div>
+        <span>行业要闻</span>
+    </div>
+    <div class="function-item">
+        <div class="function-icon">
+            <img src="移动端需要的图片/党建园地png.png" alt="党建园地">
+        </div>
+        <span>党建园地</span>
+    </div>
+    <div class="function-item">
+        <div class="function-icon">
+            <img src="移动端需要的图片/通知公告.png" alt="通知公告">
+        </div>
+        <span>通知公告</span>
+    </div>
+    <div class="function-item">
+        <div class="function-icon">
+            <img src="移动端需要的图片/社工园地.png" alt="社工园地">
+        </div>
+        <span>社工园地</span>
+    </div>
+    <div class="function-item">
+        <div class="function-icon">
+            <img src="移动端需要的图片/便民查询.png" alt="便民查询">
+        </div>
+        <span>便民查询</span>
+    </div>
+    <div class="function-item">
+        <div class="function-icon">
+            <img src="移动端需要的图片/会员登录png.png" alt="会员登录">
+        </div>
+        <span>会员登录</span>
+    </div>
+    <div class="function-item">
+        <div class="function-icon">
+            <img src="移动端需要的图片/关于我们.png" alt="关于我们">
+        </div>
+        <span>关于我们</span>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<div class="search-container">
+    <div class="search-box">
+        <input type="text" placeholder="全站搜索">
+        <button>搜索</button>
+    </div>
+</div>
+
+<!-- Notice Bar -->
+<div class="notice-bar">
+    <div class="notice-header">
+        <div class="notice-icon">
+            <img src="移动端需要的图片/通知公告.png" alt="通知公告">
+        </div>
+        <span class="notice-title">通知公告</span>
+    </div>
+    <div class="notice-content">
+        <div class="notice-scroll">
+            <div class="notice-item">济南市社会工作协会2024年度工作总结大会圆满召开</div>
+            <div class="notice-item">关于开展社会工作专业人才培训的通知</div>
+            <div class="notice-item">济南市优秀社工评选活动正式启动，欢迎报名参与</div>
+            <div class="notice-item">社区服务中心志愿者招募公告，期待您的加入</div>
+            <div class="notice-item">济南市社会工作协会2024年度工作总结大会圆满召开</div>
+            <div class="notice-item">关于开展社会工作专业人才培训的通知</div>
+            <div class="notice-item">济南市优秀社工评选活动正式启动，欢迎报名参与</div>
+            <div class="notice-item">社区服务中心志愿者招募公告，期待您的加入</div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Carousel -->
+<div class="carousel-container" id="mainCarousel">
+    <div class="carousel-wrapper">
+        <div class="carousel-slide">
+            推进"五社联动"关爱"一小一老"<br>
+            山东省暨济南市2023年度社会工作主题宣传活动
+        </div>
+        <div class="carousel-slide">
+            社会工作专业服务
+        </div>
+        <div class="carousel-slide">
+            关爱社区发展
+        </div>
+    </div>
+    <div class="carousel-dots">
+        <span class="carousel-dot active"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+    </div>
+</div>
+
+<!-- Tabbed News Section -->
+<div class="section">
+    <div class="tabs-header">
+        <div class="tab-item active" data-tab="industry">
+            <div class="tab-item-content">
+                    <span class="tab-icon">
+                        <img src="移动端需要的图片/灰色行业要闻.png" alt="">
+                    </span>
+                <span class="tab-title">行业要闻</span>
+            </div>
+            <div class="tab-divider"></div>
+        </div>
+        <div class="tab-item" data-tab="notice">
+            <div class="tab-item-content">
+                    <span class="tab-icon">
+                        <img src="移动端需要的图片/灰色通知公告.png" alt="">
+                    </span>
+                <span class="tab-title">通知公告</span>
+            </div>
+            <div class="tab-divider"></div>
+        </div>
+        <div class="tab-item" data-tab="community">
+            <div class="tab-item-content">
+                    <span class="tab-icon">
+                        <img src="移动端需要的图片/灰色社工园地png.png" alt="">
+                    </span>
+                <span class="tab-title">社工园地</span>
+            </div>
+            <div class="tab-divider"></div>
+        </div>
+    </div>
+
+    <!-- 行业要闻 -->
+    <div class="tab-content active" id="industry">
+        <ul class="news-list">
+            <li class="news-item">
+                <span class="news-text">这是行业要闻的资讯标题，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是行业要闻的资讯标题，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是行业要闻的资讯标题，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是行业要闻的资讯标题，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是行业要闻的资讯标题，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是行业要闻的资讯标题，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是行业要闻的资讯标题，第一条可以显示</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 通知公告 -->
+    <div class="tab-content" id="notice">
+        <ul class="news-list">
+            <li class="news-item">
+                <span class="news-text">这是通知公告的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是通知公告的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是通知公告的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是通知公告的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是通知公告的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是通知公告的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是通知公告的内容，第一条可以显示</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 社工园地 -->
+    <div class="tab-content" id="community">
+        <ul class="news-list">
+            <li class="news-item">
+                <span class="news-text">这是社工园地的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是社工园地的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是社工园地的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是社工园地的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是社工园地的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是社工园地的内容，第一条可以显示</span>
+            </li>
+            <li class="news-item">
+                <span class="news-text">这是社工园地的内容，第一条可以显示</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Gallery -->
+<div class="gallery-section">
+    <div class="section-header">
+        <div class="section-icon">
+            <img src="移动端需要的图片/风采展示.png" alt="风采展示">
+        </div>
+        <span class="section-title">风采展示</span>
+    </div>
+    <div class="section-divider"></div>
+    <div class="gallery-carousel" id="galleryCarousel">
+        <div class="gallery-wrapper">
+            <div class="gallery-slide">
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">👥</div>
+                            <div style="font-size:12px;color:#666;">高层人才</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">高层人才 姓名</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">🎓</div>
+                            <div style="font-size:12px;color:#666;">督导专家</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">督导专家 姓名</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">🌟</div>
+                            <div style="font-size:12px;color:#666;">督导人才</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">督导人才 姓名</div>
+                </div>
+            </div>
+            <div class="gallery-slide">
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">💼</div>
+                            <div style="font-size:12px;color:#666;">专业人才</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">专业人才 姓名</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">🏆</div>
+                            <div style="font-size:12px;color:#666;">优秀社工</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">优秀社工 姓名</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">📚</div>
+                            <div style="font-size:12px;color:#666;">资深导师</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">资深导师 姓名</div>
+                </div>
+            </div>
+            <div class="gallery-slide">
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">🎯</div>
+                            <div style="font-size:12px;color:#666;">项目负责人</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">项目负责人 姓名</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">🌐</div>
+                            <div style="font-size:12px;color:#666;">社区服务</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">社区服务 姓名</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div style="text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">✨</div>
+                            <div style="font-size:12px;color:#666;">杰出贡献</div>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">杰出贡献 姓名</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services -->
+<div class="services-section">
+    <div class="section-header">
+        <div class="section-icon">
+            <img src="移动端需要的图片/便民服务.png" alt="便民服务">
+        </div>
+        <span class="section-title">便民服务</span>
+    </div>
+    <div class="section-divider"></div>
+    <div class="services-grid">
+        <div class="service-item">社会工作政策法规</div>
+        <div class="service-item">社会工作行业标准</div>
+        <div class="service-item">社会工作书面材料模板</div>
+        <div class="service-item">宗小智</div>
+        <div class="service-item">社会工作服务机构</div>
+        <div class="service-item">社会工作服务项目</div>
+        <div class="service-item">社会工作服务站点</div>
+        <div class="service-item">驻济高校社会工作专业</div>
+        <div class="service-item">中国社会工作网</div>
+        <div class="service-item">山东省志愿服务网</div>
+    </div>
+</div>
+
+<!-- Links -->
+<div class="links-section">
+    <div class="section-header">
+        <div class="section-icon">
+            <img src="移动端需要的图片/友情链接.png" alt="友情链接">
+        </div>
+        <span class="section-title">友情链接</span>
+    </div>
+    <div class="section-divider"></div>
+    <div class="links-list">
+        <a href="#">中共中央社会工作部</a>
+        <a href="#">社工中国网</a>
+        <a href="#">山东省社会工作联合会</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-title-wrapper">
+        <div class="footer-title">媒体矩阵</div>
+    </div>
+    <div class="qr-section">
+        <div class="qr-item">
+            <div class="qr-label">济南社工协会微信</div>
+            <div class="qr-code">
+                <img src="移动端需要的图片/二维码/微信公众号二维码.png" alt="微信公众号">
+            </div>
+        </div>
+        <div class="qr-item">
+            <div class="qr-label">济南社工协会微博</div>
+            <div class="qr-code">
+                <img src="移动端需要的图片/二维码/新浪微博二维码.png" alt="新浪微博">
+            </div>
+        </div>
+        <div class="qr-item">
+            <div class="qr-label">济南社工协会抖音</div>
+            <div class="qr-code">
+                <img src="移动端需要的图片/二维码/抖音二维码.png" alt="抖音">
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-info">
+        <div class="footer-title-wrapper">
+            <div class="footer-contact-title">联系我们</div>
+        </div>
+        <div class="footer-copyright">济南社工协会 版权所有</div>
+        <div class="footer-contact-info">
+            <div class="footer-address">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：济南市历下区龙奥北路金融中心2号楼204室</div>
+            <div class="footer-contact">
+                <div>联系电话：0531-69905776 /69905329</div>
+                <div>鲁ICP备 09054985-6&nbsp;&nbsp;&nbsp;&nbsp;鲁公网安备 37010402001265号</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tab Switching
+    const tabItems = document.querySelectorAll('.tab-item');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabItems.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetTab = tab.getAttribute('data-tab');
+
+            // Remove active class from all tabs and contents
+            tabItems.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding content
+            tab.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
+
+    // Main Carousel
+    let mainCarouselIndex = 0;
+    const mainSlides = document.querySelectorAll('#mainCarousel .carousel-slide');
+    const mainDots = document.querySelectorAll('#mainCarousel .carousel-dot');
+    const mainWrapper = document.querySelector('#mainCarousel .carousel-wrapper');
+    let mainAutoPlay;
+
+    function showMainSlide(index) {
+        mainCarouselIndex = index;
+        mainWrapper.style.transform = `translateX(-${index * 100}%)`;
+        mainDots.forEach(dot => dot.classList.remove('active'));
+        mainDots[index].classList.add('active');
+    }
+
+    function nextMainSlide() {
+        mainCarouselIndex = (mainCarouselIndex + 1) % mainSlides.length;
+        showMainSlide(mainCarouselIndex);
+    }
+
+    function startMainAutoPlay() {
+        mainAutoPlay = setInterval(nextMainSlide, 5000);
+    }
+
+    function stopMainAutoPlay() {
+        clearInterval(mainAutoPlay);
+    }
+
+    // Dot clicks
+    mainDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            stopMainAutoPlay();
+            showMainSlide(index);
+            startMainAutoPlay();
+        });
+    });
+
+    // Touch support for main carousel
+    let mainStartX = 0;
+    let mainEndX = 0;
+
+    document.getElementById('mainCarousel').addEventListener('touchstart', (e) => {
+        mainStartX = e.touches[0].clientX;
+        stopMainAutoPlay();
+    });
+
+    document.getElementById('mainCarousel').addEventListener('touchmove', (e) => {
+        mainEndX = e.touches[0].clientX;
+    });
+
+    document.getElementById('mainCarousel').addEventListener('touchend', () => {
+        const diff = mainStartX - mainEndX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                mainCarouselIndex = (mainCarouselIndex + 1) % mainSlides.length;
+            } else {
+                mainCarouselIndex = (mainCarouselIndex - 1 + mainSlides.length) % mainSlides.length;
+            }
+            showMainSlide(mainCarouselIndex);
+        }
+        startMainAutoPlay();
+    });
+
+    // Gallery Carousel
+    let galleryIndex = 0;
+    const gallerySlides = document.querySelectorAll('#galleryCarousel .gallery-slide');
+    const galleryWrapper = document.querySelector('#galleryCarousel .gallery-wrapper');
+    let galleryAutoPlay;
+
+    function showGallerySlide(index) {
+        galleryIndex = index;
+        galleryWrapper.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function nextGallerySlide() {
+        galleryIndex = (galleryIndex + 1) % gallerySlides.length;
+        showGallerySlide(galleryIndex);
+    }
+
+    function startGalleryAutoPlay() {
+        galleryAutoPlay = setInterval(nextGallerySlide, 4000);
+    }
+
+    function stopGalleryAutoPlay() {
+        clearInterval(galleryAutoPlay);
+    }
+
+    // Touch support for gallery
+    let galleryStartX = 0;
+    let galleryEndX = 0;
+
+    document.getElementById('galleryCarousel').addEventListener('touchstart', (e) => {
+        galleryStartX = e.touches[0].clientX;
+        stopGalleryAutoPlay();
+    });
+
+    document.getElementById('galleryCarousel').addEventListener('touchmove', (e) => {
+        galleryEndX = e.touches[0].clientX;
+    });
+
+    document.getElementById('galleryCarousel').addEventListener('touchend', () => {
+        const diff = galleryStartX - galleryEndX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                galleryIndex = (galleryIndex + 1) % gallerySlides.length;
+            } else {
+                galleryIndex = (galleryIndex - 1 + gallerySlides.length) % gallerySlides.length;
+            }
+            showGallerySlide(galleryIndex);
+        }
+        startGalleryAutoPlay();
+    });
+
+    // Start auto play
+    startMainAutoPlay();
+    startGalleryAutoPlay();
+
+    // Pause on visibility change
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopMainAutoPlay();
+            stopGalleryAutoPlay();
+        } else {
+            startMainAutoPlay();
+            startGalleryAutoPlay();
+        }
+    });
+</script>
+</body>
+</html>
