@@ -404,7 +404,7 @@
 
         .tab-divider::before {
             background: #e53935;
-            clip-path: polygon(0 0, calc(100% - 2·px) 0, 100% 100%, 0 100%);
+            clip-path: polygon(0 0, calc(100% - 2px) 0, 100% 100%, 0 100%);
         }
 
         .tab-divider::after {
@@ -1695,9 +1695,10 @@
 
     function showGalleryItem(index) {
         galleryIndex = index;
-        // 获取单个gallery-item的实际宽度
-        const item = galleryItems[0];
-        const itemWidth = item.offsetWidth;
+        // 计算容器宽度,每3个项目占一屏
+        const containerWidth = galleryContainer.offsetWidth;
+        // 每个项目的宽度 = (容器宽度 - 两个间隙) / 3
+        const itemWidth = (containerWidth - 16) / 3;
         const gap = 8;
         // 每次滚动一个项目的宽度加上间隙
         const scrollDistance = (itemWidth + gap) * index;
@@ -1707,12 +1708,21 @@
     function nextGalleryItem() {
         // 总共9张图片,最多可以滚动6次(让最后3张显示在视口)
         const maxIndex = galleryItems.length - 3;
-        if (galleryIndex >= maxIndex) {
-            galleryIndex = 0; // 回到开始
+        galleryIndex++;
+
+        if (galleryIndex > maxIndex) {
+            // 先禁用过渡动画,瞬间跳回开始
+            galleryWrapper.style.transition = 'none';
+            galleryIndex = 0;
+            showGalleryItem(galleryIndex);
+
+            // 强制重绘后重新启用过渡动画
+            setTimeout(() => {
+                galleryWrapper.style.transition = 'transform 0.5s ease';
+            }, 50);
         } else {
-            galleryIndex++;
+            showGalleryItem(galleryIndex);
         }
-        showGalleryItem(galleryIndex);
     }
 
     function startGalleryAutoPlay() {
