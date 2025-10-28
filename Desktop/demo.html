@@ -334,8 +334,8 @@
             transition: all 0.3s;
             display: flex;
             flex-direction: row;
-            align-items: flex-start;
-            justify-content: center;
+            align-items: center;
+            justify-content: flex-start;
             gap: 5px;
         }
 
@@ -360,7 +360,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            margin-top: 3px;
+            margin-top: 0;
         }
 
         .tab-icon img {
@@ -561,6 +561,45 @@
             overflow: hidden;
             border-radius: 0;
             margin-top: 12px;
+        }
+
+        .gallery-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            color: rgba(0, 0, 0, 0.7);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            z-index: 10;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-arrow:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-arrow:active {
+            background: rgba(255, 255, 255, 1);
+            color: rgba(0, 0, 0, 1);
+        }
+
+        .gallery-arrow-left {
+            left: 5px;
+        }
+
+        .gallery-arrow-right {
+            right: 5px;
         }
 
         .gallery-wrapper {
@@ -1354,6 +1393,8 @@
         </div>
     </div>
     <div class="gallery-carousel" id="galleryCarousel">
+        <button class="gallery-arrow gallery-arrow-left" id="galleryPrev">&lt;</button>
+        <button class="gallery-arrow gallery-arrow-right" id="galleryNext">&gt;</button>
         <div class="gallery-wrapper">
             <div class="gallery-item">
                 <div class="gallery-content">
@@ -1695,10 +1736,9 @@
 
     function showGalleryItem(index) {
         galleryIndex = index;
-        // 计算容器宽度,每3个项目占一屏
-        const containerWidth = galleryContainer.offsetWidth;
-        // 每个项目的宽度 = (容器宽度 - 两个间隙) / 3
-        const itemWidth = (containerWidth - 16) / 3;
+        // 使用CSS中相同的计算方式: (100vw - 60px - 16px) / 3
+        const viewportWidth = window.innerWidth;
+        const itemWidth = (viewportWidth - 60 - 16) / 3;
         const gap = 8;
         // 每次滚动一个项目的宽度加上间隙
         const scrollDistance = (itemWidth + gap) * index;
@@ -1732,6 +1772,38 @@
     function stopGalleryAutoPlay() {
         clearInterval(galleryAutoPlay);
     }
+
+    // Arrow controls
+    const galleryPrev = document.getElementById('galleryPrev');
+    const galleryNext = document.getElementById('galleryNext');
+
+    // 左箭头 - 向左轮播一张(显示后面的图片,索引+1)
+    galleryPrev.addEventListener('click', () => {
+        stopGalleryAutoPlay();
+        const maxIndex = galleryItems.length - 3;
+        if (galleryIndex >= maxIndex) {
+            galleryIndex = 0;
+        } else {
+            galleryIndex++;
+        }
+        showGalleryItem(galleryIndex);
+        startGalleryAutoPlay();
+    });
+
+    // 右箭头 - 向右轮播一张(显示前面的图片,索引-1)
+    galleryNext.addEventListener('click', () => {
+        stopGalleryAutoPlay();
+        // 确保过渡动画启用
+        galleryWrapper.style.transition = 'transform 0.5s ease';
+        const maxIndex = galleryItems.length - 3;
+        if (galleryIndex <= 0) {
+            galleryIndex = maxIndex;
+        } else {
+            galleryIndex--;
+        }
+        showGalleryItem(galleryIndex);
+        startGalleryAutoPlay();
+    });
 
     // Touch support for gallery
     let galleryStartX = 0;
@@ -1844,9 +1916,55 @@
         });
     }
 
+    // Adjust tab content alignment
+    function adjustTabContentAlignment() {
+        // 获取当前激活的tab
+        const activeTab = document.querySelector('.tab-item.active');
+        if (!activeTab) return;
+
+        // 获取tab-text-wrapper的左侧位置
+        const tabTextWrapper = activeTab.querySelector('.tab-text-wrapper');
+        if (!tabTextWrapper) return;
+
+        // 获取.tabs-header的padding-left (10px)
+        const tabsHeader = document.querySelector('.tabs-header');
+        const tabsHeaderStyle = window.getComputedStyle(tabsHeader);
+        const tabsHeaderPaddingLeft = parseFloat(tabsHeaderStyle.paddingLeft);
+
+        // 获取tab-icon的宽度
+        const tabIcon = activeTab.querySelector('.tab-icon');
+        const tabIconWidth = tabIcon ? tabIcon.offsetWidth : 0;
+
+        // 获取tab-item的gap (5px)
+        const tabItemStyle = window.getComputedStyle(activeTab);
+        const gap = parseFloat(tabItemStyle.gap) || 5;
+
+        // 计算总的左侧偏移: tabs-header的padding + icon宽度 + gap
+        const leftOffset = tabsHeaderPaddingLeft + tabIconWidth + gap;
+
+        // 应用到所有tab-content
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => {
+            content.style.paddingLeft = leftOffset + 'px';
+        });
+    }
+
     // Run on page load and resize
-    window.addEventListener('load', adjustDividerWidths);
-    window.addEventListener('resize', adjustDividerWidths);
+    window.addEventListener('load', () => {
+        adjustDividerWidths();
+        adjustTabContentAlignment();
+    });
+    window.addEventListener('resize', () => {
+        adjustDividerWidths();
+        adjustTabContentAlignment();
+    });
+
+    // Also adjust alignment when tabs are switched
+    tabItems.forEach(tab => {
+        tab.addEventListener('click', () => {
+            setTimeout(adjustTabContentAlignment, 0);
+        });
+    });
 </script>
 </body>
 </html>
