@@ -103,10 +103,15 @@
         }
 
         .function-icon img {
-            width: 100%;
-            height: 100%;
+            width: 80%;
+            height: 80%;
             object-fit: contain;
             filter: brightness(0) invert(1);
+        }
+
+        .function-icon.icon-larger img {
+            width: 125%;
+            height: 125%;
         }
 
         .function-item span {
@@ -328,10 +333,17 @@
             position: relative;
             transition: all 0.3s;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
             gap: 5px;
+        }
+
+        .tab-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1px;
         }
 
         .tab-item-content {
@@ -348,6 +360,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            margin-top: 3px;
         }
 
         .tab-icon img {
@@ -374,19 +387,53 @@
         }
 
         .tab-divider {
-            height: 2px;
-            background: linear-gradient(to right, #e53935 50%, #1e88e5 50%);
-            margin: 8px auto 0;
+            height: 3px;
+            margin: 0;
             width: fit-content;
             min-width: 100px;
+            position: relative;
+            display: flex;
+        }
+
+        .tab-divider::before,
+        .tab-divider::after {
+            content: '';
+            height: 100%;
+            flex: 1;
+        }
+
+        .tab-divider::before {
+            background: #e53935;
+            clip-path: polygon(0 0, calc(100% - 2·px) 0, 100% 100%, 0 100%);
+        }
+
+        .tab-divider::after {
+            background: #1e88e5;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 2px 100%);
         }
 
         .tab-item.active .tab-divider {
-            display: block;
+            display: flex;
+        }
+
+        .tab-item.active .tab-divider::before {
+            background: #e53935;
+        }
+
+        .tab-item.active .tab-divider::after {
+            background: #1e88e5;
         }
 
         .tab-item .tab-divider {
-            display: none;
+            display: flex;
+        }
+
+        .tab-item .tab-divider::before {
+            background: #999;
+        }
+
+        .tab-item .tab-divider::after {
+            background: #666;
         }
 
         .tab-content {
@@ -436,6 +483,21 @@
             padding: 15px;
         }
 
+        .section-header-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            margin-left: 10px;
+            gap: 8px;
+        }
+
+        .section-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1px;
+        }
+
         .section-header {
             display: inline-flex;
             align-items: center;
@@ -451,7 +513,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 8px;
+            flex-shrink: 0;
+            margin-top: 3px;
         }
 
         .section-icon img {
@@ -467,11 +530,29 @@
         }
 
         .section-divider {
-            height: 2px;
-            background: linear-gradient(to right, #e53935 50%, #1e88e5 50%);
-            margin: 8px 10px 12px;
+            height: 3px;
+            margin: 0;
             width: fit-content;
             min-width: 140px;
+            position: relative;
+            display: flex;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            height: 100%;
+            flex: 1;
+        }
+
+        .section-divider::before {
+            background: #e53935;
+            clip-path: polygon(0 0, calc(100% - 2px) 0, 100% 100%, 0 100%);
+        }
+
+        .section-divider::after {
+            background: #1e88e5;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 2px 100%);
         }
 
         .gallery-carousel {
@@ -483,9 +564,12 @@
         }
 
         .gallery-wrapper {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(9, calc((100vw - 60px - 16px) / 3));
+            grid-gap: 8px;
             transition: transform 0.5s ease;
             height: 100%;
+            width: fit-content;
         }
 
         .gallery-slide {
@@ -507,6 +591,8 @@
             display: flex;
             flex-direction: column;
             border: 1px solid #e0e0e0;
+            width: calc((100vw - 60px - 16px) / 3);
+            flex-shrink: 0;
         }
 
         .gallery-slide img {
@@ -559,21 +645,62 @@
         }
 
         .service-item {
-            background: url('移动端需要的图片/便民服务背景.png') no-repeat center;
+            background: url('便民服务图标/圆角矩形 6 拷贝 4.png') no-repeat center;
             background-size: cover;
             color: white;
-            padding: 8px 3px;
+            padding: 8px 0px;
             border-radius: 6px;
             text-align: center;
             font-size: 10px;
             cursor: pointer;
             transition: transform 0.2s;
-            min-height: 40px;
+            min-height: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .service-item-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .service-item-content .service-icon {
+            position: absolute;
+            left: 3px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .service-item-content span {
+            width: 100%;
+            text-align: center;
+            padding: 0 22px;
+        }
+
+        .service-icon {
+            width: 16px;
+            height: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            white-space: nowrap;
-            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .service-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
         }
 
         .service-item:active {
@@ -940,6 +1067,62 @@
         .carousel-container, .gallery-carousel {
             touch-action: pan-y;
         }
+
+        /* Modal for QR Code */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            max-width: 300px;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            line-height: 1;
+        }
+
+        .modal-qr {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+        }
+
+        .modal-qr img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -957,7 +1140,7 @@
         <span>行业要闻</span>
     </div>
     <div class="function-item">
-        <div class="function-icon">
+        <div class="function-icon icon-larger">
             <img src="移动端需要的图片/党建园地png.png" alt="党建园地">
         </div>
         <span>党建园地</span>
@@ -1049,31 +1232,31 @@
 <div class="section">
     <div class="tabs-header">
         <div class="tab-item active" data-tab="industry">
-            <div class="tab-item-content">
-                    <span class="tab-icon">
-                        <img src="移动端需要的图片/灰色行业要闻.png" alt="">
-                    </span>
+            <span class="tab-icon">
+                <img src="移动端需要的图片/灰色行业要闻.png" alt="">
+            </span>
+            <div class="tab-text-wrapper">
                 <span class="tab-title">行业要闻</span>
+                <div class="tab-divider"></div>
             </div>
-            <div class="tab-divider"></div>
         </div>
         <div class="tab-item" data-tab="notice">
-            <div class="tab-item-content">
-                    <span class="tab-icon">
-                        <img src="移动端需要的图片/灰色通知公告.png" alt="">
-                    </span>
+            <span class="tab-icon">
+                <img src="移动端需要的图片/灰色通知公告.png" alt="">
+            </span>
+            <div class="tab-text-wrapper">
                 <span class="tab-title">通知公告</span>
+                <div class="tab-divider"></div>
             </div>
-            <div class="tab-divider"></div>
         </div>
         <div class="tab-item" data-tab="community">
-            <div class="tab-item-content">
-                    <span class="tab-icon">
-                        <img src="移动端需要的图片/灰色社工园地png.png" alt="">
-                    </span>
+            <span class="tab-icon">
+                <img src="移动端需要的图片/灰色社工园地png.png" alt="">
+            </span>
+            <div class="tab-text-wrapper">
                 <span class="tab-title">社工园地</span>
+                <div class="tab-divider"></div>
             </div>
-            <div class="tab-divider"></div>
         </div>
     </div>
 
@@ -1161,101 +1344,97 @@
 
 <!-- Gallery -->
 <div class="gallery-section">
-    <div class="section-header">
+    <div class="section-header-wrapper">
         <div class="section-icon">
             <img src="移动端需要的图片/风采展示.png" alt="风采展示">
         </div>
-        <span class="section-title">风采展示</span>
+        <div class="section-text-wrapper">
+            <span class="section-title">风采展示</span>
+            <div class="section-divider"></div>
+        </div>
     </div>
-    <div class="section-divider"></div>
     <div class="gallery-carousel" id="galleryCarousel">
         <div class="gallery-wrapper">
-            <div class="gallery-slide">
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">👥</div>
-                            <div style="font-size:12px;color:#666;">高层人才</div>
-                        </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">👥</div>
+                        <div style="font-size:12px;color:#666;">高层人才</div>
                     </div>
-                    <div class="gallery-caption">高层人才 姓名</div>
                 </div>
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">🎓</div>
-                            <div style="font-size:12px;color:#666;">督导专家</div>
-                        </div>
-                    </div>
-                    <div class="gallery-caption">督导专家 姓名</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">🌟</div>
-                            <div style="font-size:12px;color:#666;">督导人才</div>
-                        </div>
-                    </div>
-                    <div class="gallery-caption">督导人才 姓名</div>
-                </div>
+                <div class="gallery-caption">高层人才 姓名</div>
             </div>
-            <div class="gallery-slide">
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">💼</div>
-                            <div style="font-size:12px;color:#666;">专业人才</div>
-                        </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">🎓</div>
+                        <div style="font-size:12px;color:#666;">督导专家</div>
                     </div>
-                    <div class="gallery-caption">专业人才 姓名</div>
                 </div>
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">🏆</div>
-                            <div style="font-size:12px;color:#666;">优秀社工</div>
-                        </div>
-                    </div>
-                    <div class="gallery-caption">优秀社工 姓名</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">📚</div>
-                            <div style="font-size:12px;color:#666;">资深导师</div>
-                        </div>
-                    </div>
-                    <div class="gallery-caption">资深导师 姓名</div>
-                </div>
+                <div class="gallery-caption">督导专家 姓名</div>
             </div>
-            <div class="gallery-slide">
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">🎯</div>
-                            <div style="font-size:12px;color:#666;">项目负责人</div>
-                        </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">🌟</div>
+                        <div style="font-size:12px;color:#666;">督导人才</div>
                     </div>
-                    <div class="gallery-caption">项目负责人 姓名</div>
                 </div>
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">🌐</div>
-                            <div style="font-size:12px;color:#666;">社区服务</div>
-                        </div>
+                <div class="gallery-caption">督导人才 姓名</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">💼</div>
+                        <div style="font-size:12px;color:#666;">专业人才</div>
                     </div>
-                    <div class="gallery-caption">社区服务 姓名</div>
                 </div>
-                <div class="gallery-item">
-                    <div class="gallery-content">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:10px;">✨</div>
-                            <div style="font-size:12px;color:#666;">杰出贡献</div>
-                        </div>
+                <div class="gallery-caption">专业人才 姓名</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">🏆</div>
+                        <div style="font-size:12px;color:#666;">优秀社工</div>
                     </div>
-                    <div class="gallery-caption">杰出贡献 姓名</div>
                 </div>
+                <div class="gallery-caption">优秀社工 姓名</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">📚</div>
+                        <div style="font-size:12px;color:#666;">资深导师</div>
+                    </div>
+                </div>
+                <div class="gallery-caption">资深导师 姓名</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">🎯</div>
+                        <div style="font-size:12px;color:#666;">项目负责人</div>
+                    </div>
+                </div>
+                <div class="gallery-caption">项目负责人 姓名</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">🌐</div>
+                        <div style="font-size:12px;color:#666;">社区服务</div>
+                    </div>
+                </div>
+                <div class="gallery-caption">社区服务 姓名</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-content">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;margin-bottom:10px;">✨</div>
+                        <div style="font-size:12px;color:#666;">杰出贡献</div>
+                    </div>
+                </div>
+                <div class="gallery-caption">杰出贡献 姓名</div>
             </div>
         </div>
     </div>
@@ -1263,36 +1442,110 @@
 
 <!-- Services -->
 <div class="services-section">
-    <div class="section-header">
+    <div class="section-header-wrapper">
         <div class="section-icon">
             <img src="移动端需要的图片/便民服务.png" alt="便民服务">
         </div>
-        <span class="section-title">便民服务</span>
+        <div class="section-text-wrapper">
+            <span class="section-title">便民服务</span>
+            <div class="section-divider"></div>
+        </div>
     </div>
-    <div class="section-divider"></div>
     <div class="services-grid">
-        <div class="service-item">社会工作政策法规</div>
-        <div class="service-item">社会工作行业标准</div>
-        <div class="service-item">社会工作书面材料模板</div>
-        <div class="service-item">宗小智</div>
-        <div class="service-item">社会工作服务机构</div>
-        <div class="service-item">社会工作服务项目</div>
-        <div class="service-item">社会工作服务站点</div>
-        <div class="service-item">驻济高校社会工作专业</div>
-        <div class="service-item">中国社会工作网</div>
-        <div class="service-item">山东省志愿服务网</div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/社会工作政策法规.png" alt="">
+                </div>
+                <span>社会工作政策法规</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/社会工作行业标准.png" alt="">
+                </div>
+                <span>社会工作行业标准</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/社会工作者职业资格证.png" alt="">
+                </div>
+                <span>社工职业资格证</span>
+            </div>
+        </div>
+        <div class="service-item" id="quanxiaozhi">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/泉小智.png" alt="">
+                </div>
+                <span>泉小智</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/社会工作服务机构.png" alt="">
+                </div>
+                <span>社会工作服务机构</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/社会工作服务项目.png" alt="">
+                </div>
+                <span>社会工作服务项目</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/社会工作服务站点.png" alt="">
+                </div>
+                <span>社会工作服务站点</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/驻济高校社会工作专业.png" alt="">
+                </div>
+                <span>驻济高校社会工作专业</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/中国社会工作网.png" alt="">
+                </div>
+                <span>中国社会工作网</span>
+            </div>
+        </div>
+        <div class="service-item">
+            <div class="service-item-content">
+                <div class="service-icon">
+                    <img src="便民服务图标/山东省志愿服务网.png" alt="">
+                </div>
+                <span>山东省志愿服务网</span>
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- Links -->
 <div class="links-section">
-    <div class="section-header">
+    <div class="section-header-wrapper">
         <div class="section-icon">
             <img src="移动端需要的图片/友情链接.png" alt="友情链接">
         </div>
-        <span class="section-title">友情链接</span>
+        <div class="section-text-wrapper">
+            <span class="section-title">友情链接</span>
+            <div class="section-divider"></div>
+        </div>
     </div>
-    <div class="section-divider"></div>
     <div class="links-list">
         <a href="#">中共中央社会工作部</a>
         <a href="#">社工中国网</a>
@@ -1337,6 +1590,17 @@
                 <div>联系电话：0531-69905776 /69905329</div>
                 <div>鲁ICP备 09054985-6&nbsp;&nbsp;&nbsp;&nbsp;鲁公网安备 37010402001265号</div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- QR Code Modal -->
+<div class="modal" id="qrModal">
+    <div class="modal-content">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <div class="modal-title">济南社工协会微信公众号</div>
+        <div class="modal-qr">
+            <img src="移动端需要的图片/二维码/微信公众号二维码.png" alt="微信公众号二维码">
         </div>
     </div>
 </div>
@@ -1422,24 +1686,37 @@
         startMainAutoPlay();
     });
 
-    // Gallery Carousel
+    // Gallery Carousel - Single Item Scroll
     let galleryIndex = 0;
-    const gallerySlides = document.querySelectorAll('#galleryCarousel .gallery-slide');
+    const galleryItems = document.querySelectorAll('#galleryCarousel .gallery-item');
     const galleryWrapper = document.querySelector('#galleryCarousel .gallery-wrapper');
+    const galleryContainer = document.getElementById('galleryCarousel');
     let galleryAutoPlay;
 
-    function showGallerySlide(index) {
+    function showGalleryItem(index) {
         galleryIndex = index;
-        galleryWrapper.style.transform = `translateX(-${index * 100}%)`;
+        // 获取单个gallery-item的实际宽度
+        const item = galleryItems[0];
+        const itemWidth = item.offsetWidth;
+        const gap = 8;
+        // 每次滚动一个项目的宽度加上间隙
+        const scrollDistance = (itemWidth + gap) * index;
+        galleryWrapper.style.transform = `translateX(-${scrollDistance}px)`;
     }
 
-    function nextGallerySlide() {
-        galleryIndex = (galleryIndex + 1) % gallerySlides.length;
-        showGallerySlide(galleryIndex);
+    function nextGalleryItem() {
+        // 总共9张图片,最多可以滚动6次(让最后3张显示在视口)
+        const maxIndex = galleryItems.length - 3;
+        if (galleryIndex >= maxIndex) {
+            galleryIndex = 0; // 回到开始
+        } else {
+            galleryIndex++;
+        }
+        showGalleryItem(galleryIndex);
     }
 
     function startGalleryAutoPlay() {
-        galleryAutoPlay = setInterval(nextGallerySlide, 4000);
+        galleryAutoPlay = setInterval(nextGalleryItem, 4000);
     }
 
     function stopGalleryAutoPlay() {
@@ -1450,24 +1727,27 @@
     let galleryStartX = 0;
     let galleryEndX = 0;
 
-    document.getElementById('galleryCarousel').addEventListener('touchstart', (e) => {
+    galleryContainer.addEventListener('touchstart', (e) => {
         galleryStartX = e.touches[0].clientX;
         stopGalleryAutoPlay();
     });
 
-    document.getElementById('galleryCarousel').addEventListener('touchmove', (e) => {
+    galleryContainer.addEventListener('touchmove', (e) => {
         galleryEndX = e.touches[0].clientX;
     });
 
-    document.getElementById('galleryCarousel').addEventListener('touchend', () => {
+    galleryContainer.addEventListener('touchend', () => {
         const diff = galleryStartX - galleryEndX;
         if (Math.abs(diff) > 50) {
+            const maxIndex = galleryItems.length - 3;
             if (diff > 0) {
-                galleryIndex = (galleryIndex + 1) % gallerySlides.length;
+                // Swipe left - next item
+                galleryIndex = galleryIndex >= maxIndex ? 0 : galleryIndex + 1;
             } else {
-                galleryIndex = (galleryIndex - 1 + gallerySlides.length) % gallerySlides.length;
+                // Swipe right - previous item
+                galleryIndex = galleryIndex <= 0 ? maxIndex : galleryIndex - 1;
             }
-            showGallerySlide(galleryIndex);
+            showGalleryItem(galleryIndex);
         }
         startGalleryAutoPlay();
     });
@@ -1486,6 +1766,77 @@
             startGalleryAutoPlay();
         }
     });
+
+    // QR Code Modal functionality
+    const qrModal = document.getElementById('qrModal');
+    const quanxiaozhi = document.getElementById('quanxiaozhi');
+    const modalClose = document.getElementById('modalClose');
+
+    // Open modal when clicking on 泉小智
+    quanxiaozhi.addEventListener('click', () => {
+        qrModal.classList.add('active');
+    });
+
+    // Close modal when clicking on X
+    modalClose.addEventListener('click', () => {
+        qrModal.classList.remove('active');
+    });
+
+    // Close modal when clicking outside
+    qrModal.addEventListener('click', (e) => {
+        if (e.target === qrModal) {
+            qrModal.classList.remove('active');
+        }
+    });
+
+    // Adjust divider width to match text width exactly
+    function adjustDividerWidths() {
+        // Adjust tab dividers - match text width exactly
+        tabItems.forEach(tab => {
+            const tabTitle = tab.querySelector('.tab-title');
+            const divider = tab.querySelector('.tab-divider');
+            if (tabTitle && divider) {
+                // Get text width
+                const textWidth = tabTitle.offsetWidth;
+
+                divider.style.width = textWidth + 'px';
+                divider.style.minWidth = textWidth + 'px';
+                divider.style.marginLeft = '0';
+                divider.style.marginRight = 'auto';
+            }
+        });
+
+        // Adjust section dividers in section-text-wrapper (风采展示)
+        const sectionTextWrappers = document.querySelectorAll('.section-text-wrapper');
+        sectionTextWrappers.forEach(wrapper => {
+            const sectionTitle = wrapper.querySelector('.section-title');
+            const divider = wrapper.querySelector('.section-divider');
+            if (sectionTitle && divider) {
+                const textWidth = sectionTitle.offsetWidth;
+                divider.style.width = textWidth + 'px';
+                divider.style.minWidth = textWidth + 'px';
+                divider.style.marginLeft = '0';
+                divider.style.marginRight = 'auto';
+            }
+        });
+
+        // Adjust section dividers - left aligned (便民服务, 友情链接)
+        const sectionHeaders = document.querySelectorAll('.section-header');
+        sectionHeaders.forEach(header => {
+            const divider = header.parentElement.querySelector('.section-divider');
+            if (divider && !divider.closest('.section-text-wrapper')) {
+                const width = header.offsetWidth;
+                divider.style.width = width + 'px';
+                divider.style.minWidth = width + 'px';
+                divider.style.marginLeft = '10px';
+                divider.style.marginRight = 'auto';
+            }
+        });
+    }
+
+    // Run on page load and resize
+    window.addEventListener('load', adjustDividerWidths);
+    window.addEventListener('resize', adjustDividerWidths);
 </script>
 </body>
 </html>
